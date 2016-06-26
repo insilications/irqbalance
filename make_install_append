@@ -1,0 +1,2 @@
+mkdir %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+ln -s ../irqbalance.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/irqbalance.service

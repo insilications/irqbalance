@@ -4,7 +4,7 @@
 #
 Name     : irqbalance
 Version  : 1.1.0
-Release  : 2
+Release  : 3
 URL      : https://github.com/Irqbalance/irqbalance/archive/v1.1.0.tar.gz
 Source0  : https://github.com/Irqbalance/irqbalance/archive/v1.1.0.tar.gz
 Source1  : irqbalance.service
@@ -72,6 +72,10 @@ rm -rf %{buildroot}
 %make_install
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/irqbalance.service
+## make_install_append content
+mkdir %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+ln -s ../irqbalance.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/irqbalance.service
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -83,6 +87,7 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/irqbalance.servic
 %files config
 %defattr(-,root,root,-)
 /usr/lib/systemd/system/irqbalance.service
+/usr/lib/systemd/system/multi-user.target.wants/irqbalance.service
 
 %files doc
 %defattr(-,root,root,-)
