@@ -4,13 +4,15 @@
 #
 Name     : irqbalance
 Version  : 1.1.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/Irqbalance/irqbalance/archive/v1.1.0.tar.gz
 Source0  : https://github.com/Irqbalance/irqbalance/archive/v1.1.0.tar.gz
+Source1  : irqbalance.service
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: irqbalance-bin
+Requires: irqbalance-config
 Requires: irqbalance-doc
 BuildRequires : numactl-dev
 BuildRequires : pkgconfig(glib-2.0)
@@ -28,9 +30,18 @@ miss rates for irq handlers.
 %package bin
 Summary: bin components for the irqbalance package.
 Group: Binaries
+Requires: irqbalance-config
 
 %description bin
 bin components for the irqbalance package.
+
+
+%package config
+Summary: config components for the irqbalance package.
+Group: Default
+
+%description config
+config components for the irqbalance package.
 
 
 %package doc
@@ -59,6 +70,8 @@ make VERBOSE=1 V=1 %{?_smp_mflags} check
 %install
 rm -rf %{buildroot}
 %make_install
+mkdir -p %{buildroot}/usr/lib/systemd/system
+install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/irqbalance.service
 
 %files
 %defattr(-,root,root,-)
@@ -66,6 +79,10 @@ rm -rf %{buildroot}
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/irqbalance
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/irqbalance.service
 
 %files doc
 %defattr(-,root,root,-)
