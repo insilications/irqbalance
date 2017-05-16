@@ -4,7 +4,7 @@
 #
 Name     : irqbalance
 Version  : 1.2.0
-Release  : 5
+Release  : 6
 URL      : https://github.com/Irqbalance/irqbalance/archive/v1.2.0.tar.gz
 Source0  : https://github.com/Irqbalance/irqbalance/archive/v1.2.0.tar.gz
 Source1  : irqbalance.service
