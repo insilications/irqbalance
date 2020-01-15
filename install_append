@@ -1,2 +1,3 @@
-mkdir %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+install -m0644 misc/irqbalance.service %{buildroot}/usr/lib/systemd/system/
 ln -s ../irqbalance.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/irqbalance.service

@@ -4,10 +4,9 @@
 #
 Name     : irqbalance
 Version  : 1.6.0
-Release  : 13
+Release  : 16
 URL      : https://github.com/Irqbalance/irqbalance/archive/v1.6.0/irqbalance-1.6.0.tar.gz
 Source0  : https://github.com/Irqbalance/irqbalance/archive/v1.6.0/irqbalance-1.6.0.tar.gz
-Source1  : irqbalance.service
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
@@ -21,6 +20,7 @@ BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libcap-ng)
 BuildRequires : pkgconfig(libsystemd)
 BuildRequires : pkgconfig(ncursesw)
+Patch1: 0001-Run-irqbalance-as-oneshot-by-default-without-env.patch
 
 %description
 What is Irqbalance
@@ -75,13 +75,15 @@ services components for the irqbalance package.
 
 %prep
 %setup -q -n irqbalance-1.6.0
+cd %{_builddir}/irqbalance-1.6.0
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1572278398
+export SOURCE_DATE_EPOCH=1579118057
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -98,15 +100,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1572278398
+export SOURCE_DATE_EPOCH=1579118057
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/irqbalance
 cp %{_builddir}/irqbalance-1.6.0/COPYING %{buildroot}/usr/share/package-licenses/irqbalance/dfac199a7539a404407098a2541b9482279f690d
 %make_install
-mkdir -p %{buildroot}/usr/lib/systemd/system
-install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/irqbalance.service
 ## install_append content
-mkdir %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+install -m0644 misc/irqbalance.service %{buildroot}/usr/lib/systemd/system/
 ln -s ../irqbalance.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/irqbalance.service
 ## install_append end
 
