@@ -4,14 +4,16 @@
 #
 Name     : irqbalance
 Version  : 1.6.0
-Release  : 16
+Release  : 18
 URL      : https://github.com/Irqbalance/irqbalance/archive/v1.6.0/irqbalance-1.6.0.tar.gz
 Source0  : https://github.com/Irqbalance/irqbalance/archive/v1.6.0/irqbalance-1.6.0.tar.gz
+Source1  : irqbalance.tmpfiles
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: irqbalance-autostart = %{version}-%{release}
 Requires: irqbalance-bin = %{version}-%{release}
+Requires: irqbalance-config = %{version}-%{release}
 Requires: irqbalance-license = %{version}-%{release}
 Requires: irqbalance-man = %{version}-%{release}
 Requires: irqbalance-services = %{version}-%{release}
@@ -42,11 +44,20 @@ autostart components for the irqbalance package.
 %package bin
 Summary: bin components for the irqbalance package.
 Group: Binaries
+Requires: irqbalance-config = %{version}-%{release}
 Requires: irqbalance-license = %{version}-%{release}
 Requires: irqbalance-services = %{version}-%{release}
 
 %description bin
 bin components for the irqbalance package.
+
+
+%package config
+Summary: config components for the irqbalance package.
+Group: Default
+
+%description config
+config components for the irqbalance package.
 
 
 %package license
@@ -83,7 +94,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1579118057
+export SOURCE_DATE_EPOCH=1579207926
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -100,11 +111,13 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1579118057
+export SOURCE_DATE_EPOCH=1579207926
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/irqbalance
 cp %{_builddir}/irqbalance-1.6.0/COPYING %{buildroot}/usr/share/package-licenses/irqbalance/dfac199a7539a404407098a2541b9482279f690d
 %make_install
+mkdir -p %{buildroot}/usr/lib/tmpfiles.d
+install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/irqbalance.conf
 ## install_append content
 mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
 install -m0644 misc/irqbalance.service %{buildroot}/usr/lib/systemd/system/
@@ -122,6 +135,10 @@ ln -s ../irqbalance.service %{buildroot}/usr/lib/systemd/system/multi-user.targe
 %defattr(-,root,root,-)
 /usr/bin/irqbalance
 /usr/bin/irqbalance-ui
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/tmpfiles.d/irqbalance.conf
 
 %files license
 %defattr(0644,root,root,0755)
