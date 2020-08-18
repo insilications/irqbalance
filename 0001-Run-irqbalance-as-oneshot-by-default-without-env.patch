@@ -7,21 +7,15 @@ Subject: [PATCH] Run irqbalance as oneshot by default, without env.
  misc/irqbalance.service | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/misc/irqbalance.service b/misc/irqbalance.service
-index bb6ed98..1065a70 100644
---- a/misc/irqbalance.service
-+++ b/misc/irqbalance.service
-@@ -5,8 +5,8 @@ Documentation=https://github.com/Irqbalance/irqbalance
- ConditionVirtualization=!container
- 
+--- irqbalance-1.7.0/misc/irqbalance.service~	2020-08-04 12:30:13.000000000 +0000
++++ irqbalance-1.7.0/misc/irqbalance.service	2020-08-18 14:34:39.734913645 +0000
+@@ -7,7 +7,8 @@
  [Service]
--EnvironmentFile=/path/to/irqbalance.env
+ EnvironmentFile=-/usr/lib/irqbalance/defaults.env
+ EnvironmentFile=-/path/to/irqbalance.env
 -ExecStart=/usr/sbin/irqbalance --foreground $IRQBALANCE_ARGS
 +Type=oneshot
 +ExecStart=/usr/sbin/irqbalance --oneshot
  CapabilityBoundingSet=
  NoNewPrivileges=yes
  ReadOnlyPaths=/
--- 
-2.25.0
-
