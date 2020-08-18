@@ -4,7 +4,7 @@
 #
 Name     : irqbalance
 Version  : 1.7.0
-Release  : 19
+Release  : 20
 URL      : https://github.com/Irqbalance/irqbalance/archive/v1.7.0/irqbalance-1.7.0.tar.gz
 Source0  : https://github.com/Irqbalance/irqbalance/archive/v1.7.0/irqbalance-1.7.0.tar.gz
 Source1  : irqbalance.tmpfiles
@@ -94,7 +94,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1597761421
+export SOURCE_DATE_EPOCH=1597761562
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -111,7 +111,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1597761421
+export SOURCE_DATE_EPOCH=1597761562
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/irqbalance
 cp %{_builddir}/irqbalance-1.7.0/COPYING %{buildroot}/usr/share/package-licenses/irqbalance/dfac199a7539a404407098a2541b9482279f690d
