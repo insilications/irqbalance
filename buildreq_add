@@ -50,6 +50,10 @@ ncurses-dev
 ncurses-dev32
 ncurses-staticdev
 numactl-dev
+pcre2-dev
+pcre2-staticdev
+pcre-dev
+pcre-staticdev
 pkg-config-dev
 procps-ng
 python3-dev
