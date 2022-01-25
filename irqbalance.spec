@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : irqbalance
 Version  : 1.8.0
-Release  : 301
+Release  : 303
 URL      : file:///aot/build/clearlinux/packages/irqbalance/irqbalance-v1.8.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/irqbalance/irqbalance-v1.8.0.tar.gz
 Source1  : irqbalance.tmpfiles
@@ -156,7 +156,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1643090284
+export SOURCE_DATE_EPOCH=1643090959
 export GCC_IGNORE_WERROR=1
 ## altflags_pgo content
 ## pgo generate
@@ -244,7 +244,7 @@ export LIBS="${LIBS_GENERATE}"
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 %install
-export SOURCE_DATE_EPOCH=1643090284
+export SOURCE_DATE_EPOCH=1643090959
 rm -rf %{buildroot}
 export GCC_IGNORE_WERROR=1
 ## altflags_pgo content
